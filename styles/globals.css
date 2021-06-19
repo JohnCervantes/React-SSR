@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Limelight&family=Roboto&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .headline{
+    @apply 
+    text-green-500 
+    text-4xl 
+    font-black 
+    pt-3 pb-1;
+}
+
+.content{
+    @apply
+    text-lg 
+    text-justify 
+    p-2;
+} */
+
+.content-section {
+  @apply flex-col
+    w-10/12 
+    m-auto 
+    items-start;
+}
+
+.navigation {
+  @apply flex
+    justify-between
+  bg-green-300
+    p-5
+    h-1/4;
+}
+
+.animal-info-section {
+  @apply grid grid-cols-4 gap-y-7;
+}
+
+.animal-info-container {
+  @apply flex bg-gray-300
+  rounded-sm
+    m-2
+    w-3/4
+    shadow-lg
+    cursor-pointer;
+
+}
+
+.animal-image {
+  @apply flex
+  border-2
+  border-black
+  rounded-md
+  w-2/4
+  m-1
+  justify-center
+  items-center;
+}
+
+.animal-info {
+  @apply w-2/4
+  m-1;
+}
+
+.modal-container {
+  @apply flex
+    bg-gray-900
+    bg-opacity-50
+    absolute
+    h-screen
+    w-screen
+    justify-center
+    items-center;
+}
+
+.modal-form {
+  @apply w-6/12
+    h-3/6
+    bg-white;
+}
