@@ -4,20 +4,19 @@ export const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
-        animalsVar: {
+        readState: {
           read() {
-            return animalsVar();
+            return state();
           },
-        },
-        initialDataLoadVar: {
-          read() {
-            return initialDataLoad();
-          },
-        },
+        }
       },
     },
   },
 });
 
-export const animalsVar = makeVar([]);
-export const initialDataLoad = makeVar(false);
+export const state = makeVar({
+  initialLoad:false,
+  animals:[],
+  showModal: false,
+  showSpinner: false
+});

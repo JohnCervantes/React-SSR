@@ -4,41 +4,36 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import Link from "next/link";
-import {
-  ALL_ANIMALS,
-  ALL_ANIMALS_VAR,
-  INITIAL_DATA_LOAD_VAR,
-} from "../operations/query";
-import {
-  ADD_ANIMAL,
-  addAnimal,
-  setAnimals,
-  setInitialDataLoad,
-} from "../operations/mutation";
+import { ALL_ANIMALS, readState } from "../operations/query";
+import { ADD_ANIMAL, setState } from "../operations/mutation";
 
 function Zoo() {
   const { loading, error, data } = useQuery(ALL_ANIMALS);
-  const { data: animalsVarData } = useQuery(ALL_ANIMALS_VAR);
-  const { data: initialDataLoadData } = useQuery(INITIAL_DATA_LOAD_VAR);
+  const {
+    data: {
+      readState: { animals, initialLoad },
+    },
+  } = useQuery(readState("animals, initialLoad"));
   const [addAnimalMut] = useMutation(ADD_ANIMAL);
 
   useEffect(() => {
     if (loading) {
-      return <div>loading...</div>;
+      return setState({ showSpinner: true });
     }
     if (error) console.log(error);
-    if (!initialDataLoadData.initialDataLoadVar) {
-      setAnimals(data.animals);
-      setInitialDataLoad(true);
+    if (!initialLoad) {
+      setState({ animals: data.animals, initialLoad: true, showSpinner: false});
     }
   }, [data]);
 
   async function handleAddAnimal() {
     try {
-      const { data } = await addAnimalMut({
+      const {
+        data: { addAnimal },
+      } = await addAnimalMut({
         variables: { name: "dog", age: 5, color: "green" },
       });
-      addAnimal(data.addAnimal);
+      setState({ animals: animals.concat(addAnimal) });
     } catch (e) {
       console.log(e);
     }
@@ -48,13 +43,13 @@ function Zoo() {
     <div>
       <div className="navigation">
         <p>Zoo</p>
-        <button>add+</button>
+        <button onClick={() => setState({ showModal: true })}>add+</button>
       </div>
       <div className="content-section">
         <p className="label">Animals list:</p>
 
         <div className="animal-info-section">
-          {animalsVarData.animalsVar.map((animal) => {
+          {animals.map((animal) => {
             return (
               <Link key={animal._id} href={`/animal/${animal._id}`}>
                 <div className="animal-info-container">

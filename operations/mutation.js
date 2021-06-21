@@ -1,9 +1,9 @@
-import { gql} from "@apollo/client";
-import { animalsVar, initialDataLoad } from "../cache";
+import { gql } from "@apollo/client";
+import { state } from "../cache";
 
 export const ADD_ANIMAL = gql`
   mutation addAnimal($name: String!, $color: String!, $age: Int!) {
-    addAnimal(name:$name, color: $color, age: $age) {
+    addAnimal(name: $name, color: $color, age: $age) {
       _id
       age
       color
@@ -12,15 +12,6 @@ export const ADD_ANIMAL = gql`
   }
 `;
 
-export function addAnimal(animal){
-    const updatedAnimals = [...animalsVar(), animal]
-    animalsVar(updatedAnimals);
-}
-
-export function setAnimals(allAnimals){
-    animalsVar(allAnimals)
-}
-
-export function setInitialDataLoad(value){
-    initialDataLoad(value)
+export function setState(field) {
+  state({...state(), ...field});
 }

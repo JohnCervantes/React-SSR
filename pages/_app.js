@@ -1,6 +1,9 @@
 import "../styles/globals.css";
 import { ApolloClient, ApolloProvider, HttpLink } from "@apollo/client";
 import { cache } from "../cache.js";
+import Modal from "../components/Modal";
+import Spinner from "../components/Spinner";
+import Toast from "../components/Toast";
 
 const client = new ApolloClient({
   link: new HttpLink({
@@ -13,6 +16,9 @@ const client = new ApolloClient({
 function MyApp({ Component, pageProps }) {
   return (
     <ApolloProvider client={client}>
+      <Modal />
+      <Spinner />
+      <Toast/>
       <Component {...pageProps} />
     </ApolloProvider>
   );

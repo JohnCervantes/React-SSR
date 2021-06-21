@@ -11,19 +11,12 @@ export const ALL_ANIMALS = gql`
   }
 `;
 
-export const ALL_ANIMALS_VAR = gql`
-  query {
-    animalsVar @client {
-      _id
-      age
-      color
-      name
+export function readState(fields){
+  return gql`query {
+    readState @client {
+      ${fields}
     }
   }
 `;
-
-export const INITIAL_DATA_LOAD_VAR = gql`
-  query {
-    initialDataLoadVar @client
-  }
-`;
+}
+  
