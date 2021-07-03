@@ -8,6 +8,6 @@ module.exports = {
     DB_URI: process.env.DB_URI
   },
   images: {
-    domains: ['images.dog.ceo'],
+    domains: ["images.dog.ceo"],
   },
 };

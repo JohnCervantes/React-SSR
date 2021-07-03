@@ -149,7 +149,7 @@ function Modal() {
           />
         </div>
         <div className="mt-2 flex-col">
-          <label>Pet's Name:</label>
+          <label>Pet&apos;s Name:</label>
           <input
             type="text"
             name="name"
