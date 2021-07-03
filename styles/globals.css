@@ -20,39 +20,28 @@
 
 .navigation {
   @apply flex
-    justify-between
+    justify-start
   bg-green-300
     p-5
     h-1/4;
 }
 
 .animal-info-section {
-  @apply grid grid-cols-4 gap-y-7;
+  @apply grid grid-cols-3 gap-y-7;
 }
 
 .animal-info-container {
   @apply flex bg-gray-300
+  p-2
+  flex-col
   rounded-sm
     m-2
-    w-3/4
     shadow-lg
     cursor-pointer;
 }
 
-.animal-image {
-  @apply flex
-  border-2
-  border-black
-  rounded-md
-  w-2/4
-  m-1
-  justify-center
-  items-center;
-}
-
 .animal-info {
-  @apply w-2/4
-  m-1;
+  @apply text-left p-0;
 }
 
 .modal-container {
@@ -60,16 +49,16 @@
     fixed
     h-screen
     w-screen
-    justify-center
-    items-center
     backdrop-filter
     backdrop-blur-sm
-    z-20
+    z-20;
 }
 
 .modal-form {
   @apply w-4/12
     h-5/6
+    max-w-lg
+    overflow-y-auto
     bg-white
     fixed
     rounded-lg 
@@ -77,29 +66,31 @@
     flex
     flex-col 
     text-center
-    justify-center
     inset-0
     m-auto
     border
-    border-green-900
+    border-gray-500
     z-20
+    shadow-lg;
 }
 
-input {
+input,
+textarea {
   @apply border-solid
   border
   border-black
   rounded-sm
-  focus:outline-none focus:ring focus:border-blue-300
-  w-10/12
+  focus:outline-none focus:ring focus:ring-green-300 
+  w-full
   p-1;
 }
 
 label {
   @apply text-gray-600
+  font-bold
   block
   text-left
-  ml-8;
+  mr-3;
 }
 
 .form-submit {
@@ -114,8 +105,16 @@ a {
   @apply hover:text-black hover:underline;
 }
 
-.error{
-  @apply
-  text-yellow-500
-  mr-3
+.error {
+  @apply text-yellow-500
+  mr-3;
+}
+
+button {
+  @apply mr-3
+  hover:underline hover:font-semibold;
+}
+
+.menu {
+  @apply text-center text-3xl  m-2;
 }

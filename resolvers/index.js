@@ -53,10 +53,10 @@ const resolvers = {
     },
   },
   Mutation: {
-    addAnimal: async (parent, { name, age, color }, context) => {
+    addAnimal: async (parent, { name, description, pic, phone, email}, context) => {
       if (!context.user) return console.log("user is not logged in");
       try {
-        const result = await animal.create({ name, age, color });
+        const result = await animal.create({ name, description, pic, phone, email});
         return result;
       } catch (error) {
         throw new ApolloError(error);

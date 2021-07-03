@@ -2,9 +2,11 @@ import { gql } from "apollo-server-micro";
 const typeDefs = gql`
   type animal {
     _id: ID
+    pic: String!
     name: String!
-    color: String!
-    age: Int!
+    description: String!
+    email: String!
+    phone: String
   }
 
   type user {
@@ -13,7 +15,7 @@ const typeDefs = gql`
     email: String!
     firstName: String!
     lastName: String!
-    phone: Int
+    phone: String
     isAdmin: Boolean
     registerDate: String!
     token: String
@@ -25,13 +27,19 @@ const typeDefs = gql`
     user(email: String!, password: String!): user
   }
   type Mutation {
-    addAnimal(name: String, color: String, age: Int): animal
+    addAnimal(
+      name: String!
+      description: String!
+      pic: String!
+      phone: String
+      email: String!
+    ): animal
     addUser(
       password: String!
       email: String!
       firstName: String!
       lastName: String!
-      phone: Int
+      phone: String
       isAdmin: Boolean
       registerDate: String!
     ): user

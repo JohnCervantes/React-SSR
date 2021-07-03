@@ -11,67 +11,49 @@ import { useQuery } from "@apollo/client";
 import { readState } from "../operations/query";
 import Login from "./Login";
 import { useFormik } from "formik";
+import Image from "next/image";
+import axios from "axios";
 
 function Modal() {
-  const validate = (values) => {
-    const errors = {};
-    if (!values.name) {
-      errors.name = "This field is required";
-    }
-    if (!values.age) {
-      errors.age = "This field is required";
-    } else if (!Number(values.age)) {
-      errors.age = "Age needs to be a number";
-    }
-    if (!values.color) {
-      errors.color = "This field is required";
-    }
-
-    if (!values.password) {
-      errors.password = "This field is required";
-    }
-
-    if (!values.firstName) {
-      errors.firstName = "This field is required";
-    }
-
-    if (!values.lastName) {
-      errors.lastName = "This field is required";
-    }
-
-    if (!/^$|^\d{10}$/.test(values.phone)) {
-      errors.phone = "invalid phone number";
-    }
-
-    if (!values.email) {
-      errors.email = "This field is required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email address";
-    }
-
-    return errors;
-  };
+  const [pic, setPic] = useState("");
+  useEffect(async () => {
+    const {
+      data: { message },
+    } = await axios.get("https://dog.ceo/api/breeds/image/random");
+    setPic(message);
+    return () => {
+      setpic(null);
+    };
+  }, []);
 
   const addAnimalForm = useFormik({
     initialValues: {
       name: "",
-      age: 0,
-      color: "",
+      description: "",
+      phone: "",
+      email: "",
     },
     validate: (values) => {
       const errors = {};
       if (!values.name) {
         errors.name = "This field is required";
       }
-      if (!values.age) {
-        errors.age = "This field is required";
-      } else if (!Number(values.age)) {
-        errors.age = "Age needs to be a number";
+      if (!values.description) {
+        errors.description = "This field is required";
       }
-      if (!values.color) {
-        errors.color = "This field is required";
+
+      if (!/^$|^\d{10}$/.test(values.phone)) {
+        errors.phone = "invalid phone number";
+      }
+
+      if (!values.email) {
+        errors.email = "This field is required";
+      } else if (
+        !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+          values.email
+        )
+      ) {
+        errors.email = "Invalid email address";
       }
 
       return errors;
@@ -79,8 +61,11 @@ function Modal() {
 
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: async ({ name, age, color }, { resetForm }) => {
-      await addAnimal(name, Number(age), color);
+    onSubmit: async (
+      { name, description, email, phone },
+      { resetForm }
+    ) => {
+      await addAnimal(name, description, pic, phone, email);
       resetForm();
     },
   });
@@ -114,7 +99,9 @@ function Modal() {
       if (!values.email) {
         errors.email = "This field is required";
       } else if (
-        !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(values.email)
+        !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+          values.email
+        )
       ) {
         errors.email = "Invalid email address";
       }
@@ -128,13 +115,12 @@ function Modal() {
       { email, firstName, lastName, phone, password },
       { resetForm }
     ) => {
-      console.log("test");
       await addUser(
         email,
         password,
         firstName,
         lastName,
-        Number(phone),
+        phone,
         false,
         Date.now().toString()
       );
@@ -150,12 +136,20 @@ function Modal() {
 
   if (!showModal.show) {
     return null;
-  } else if (showModal.type === "createAnimal") {
+  } else if (showModal.type === "addAnimal") {
     return (
-      <ModalTemplate>
-        <p className="form-header">Create an Animal</p>
+      <ModalTemplate type="addAnimal">
+        <p className="form-header">Missing pet</p>
         <div className="flex-col">
-          <label>Name:</label>
+          <Image
+            src={pic}
+            height="300px"
+            width="300px"
+            alt="Picture of the missing pet"
+          />
+        </div>
+        <div className="mt-2 flex-col">
+          <label>Pet's Name:</label>
           <input
             type="text"
             name="name"
@@ -169,29 +163,44 @@ function Modal() {
           )}
         </div>
         <div className="flex-col">
-          <label>Age:</label>
-          <input
+          <label>Description:</label>
+          <textarea
             type="text"
-            name="age"
-            value={addAnimalForm.values.age}
+            name="description"
+            rows="4"
+            value={addAnimalForm.values.description}
             onChange={addAnimalForm.handleChange}
           />
-          {addAnimalForm.errors.age ? (
-            <LoginError>{addAnimalForm.errors.age}</LoginError>
+          {addAnimalForm.errors.description ? (
+            <LoginError>{addAnimalForm.errors.description}</LoginError>
           ) : (
             <div>{"\u00A0"}</div>
           )}
         </div>
-        <div className="mb-6 flex-col">
-          <label>Color:</label>
+        <div className="flex-col">
+          <label>Contact Email:</label>
           <input
             type="text"
-            name="color"
-            value={addAnimalForm.values.color}
+            name="email"
+            value={addAnimalForm.values.email}
             onChange={addAnimalForm.handleChange}
           />
-          {addAnimalForm.errors.color ? (
-            <LoginError>{addAnimalForm.errors.color}</LoginError>
+          {addAnimalForm.errors.email ? (
+            <LoginError>{addAnimalForm.errors.email}</LoginError>
+          ) : (
+            <div>{"\u00A0"}</div>
+          )}
+        </div>
+        <div className="mb-2 flex-col">
+          <label>Contact Phone number:</label>
+          <input
+            type="text"
+            name="phone"
+            value={addAnimalForm.values.phone}
+            onChange={addAnimalForm.handleChange}
+          />
+          {addAnimalForm.errors.phone ? (
+            <LoginError>{addAnimalForm.errors.phone}</LoginError>
           ) : (
             <div>{"\u00A0"}</div>
           )}
@@ -319,8 +328,14 @@ function ModalTemplate(props) {
         onClick={() => {
           setState({ showModal: RESET_MODAL });
         }}
-      />
-      <form className="modal-form">
+      ></div>
+      <form
+        className={
+          props.type !== "addAnimal"
+            ? "modal-form justify-center"
+            : "modal-form"
+        }
+      >
         <FontAwesomeIcon
           className="cursor-pointer absolute top-3 right-3"
           size="lg"

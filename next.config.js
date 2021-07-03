@@ -7,4 +7,7 @@ module.exports = {
     URI: process.env.URI,
     DB_URI: process.env.DB_URI
   },
+  images: {
+    domains: ['images.dog.ceo'],
+  },
 };

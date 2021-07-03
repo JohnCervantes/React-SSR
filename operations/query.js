@@ -4,9 +4,11 @@ export const ALL_ANIMALS = gql`
   query {
     animals {
       _id
-      age
-      color
       name
+      email
+      phone
+      pic
+      description
     }
   }
 `;

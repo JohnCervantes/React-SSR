@@ -3,12 +3,26 @@ import { state, ERROR_TOAST, SUCCESS_TOAST } from "../cache";
 import { client } from "../pages/_app";
 
 const ADD_ANIMAL = gql`
-  mutation addAnimal($name: String!, $color: String!, $age: Int!) {
-    addAnimal(name: $name, color: $color, age: $age) {
+  mutation addAnimal(
+    $name: String!
+    $description: String!
+    $pic: String!
+    $phone: String
+    $email: String!
+  ) {
+    addAnimal(
+      name: $name
+      description: $description
+      pic: $pic
+      phone: $phone
+      email: $email
+    ) {
       _id
-      age
-      color
       name
+      description
+      pic
+      phone
+      email
     }
   }
 `;
@@ -19,7 +33,7 @@ const ADD_USER = gql`
     $password: String!
     $firstName: String!
     $lastName: String!
-    $phone: Int
+    $phone: String
     $isAdmin: Boolean
     $registerDate: String!
   ) {
@@ -65,7 +79,7 @@ export async function addUser(
         lastName,
         phone,
         isAdmin,
-        registerDate
+        registerDate,
       },
     });
     setState({
@@ -88,13 +102,13 @@ export async function addUser(
   }
 }
 
-export async function addAnimal(name, age, color) {
+export async function addAnimal(name, description, pic, phone, email) {
   try {
     const {
       data: { addAnimal },
     } = await client.mutate({
       mutation: ADD_ANIMAL,
-      variables: { name, age, color },
+      variables: { name, description, pic, phone, email },
     });
     setState({
       animals: state().animals.concat(addAnimal),

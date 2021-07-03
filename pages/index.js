@@ -1,5 +1,5 @@
 // import Head from "next/head";
-// import Image from "next/image";
+import Image from "next/image";
 import React, { useEffect } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import Link from "next/link";
@@ -22,7 +22,7 @@ function Zoo() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = token ? jwt.verify(token, process.env.SECRET) : undefined;
-    if (user && user.isLoggedIn) {
+    if (user) {
       setState({ user });
     }
   }, [user]);
@@ -54,14 +54,14 @@ function Zoo() {
   return (
     <div>
       <div className="navigation">
-        <p>Zoo</p>
+        <label>Lost+Found</label>
         {user ? (
           <button
             onClick={() =>
-              setState({ showModal: { show: true, type: "createAnimal" } })
+              setState({ showModal: { show: true, type: "addAnimal" } })
             }
           >
-            add an animal
+            Add post
           </button>
         ) : null}
         {!user ? (
@@ -109,19 +109,21 @@ function Zoo() {
           </p>
         ) : (
           <React.Fragment>
-            <p className="label">Animals list:</p>
+            <p className="menu">Pet listing:</p>
             <div className="animal-info-section">
               {animals.map((animal) => {
                 return (
                   <Link key={animal._id} href={`/details/${animal._id}`}>
                     <div className="animal-info-container">
-                      <div className="animal-image">
-                        <p>image</p>
-                      </div>
+                      <Image
+                        height="300px"
+                        width="500px"
+                        src={animal.pic}
+                        alt="Picture of the missing pet"
+                      />
                       <div className="animal-info">
-                        <p>name: {animal.name}</p>
-                        <p>age: {animal.age}</p>
-                        <p>color: {animal.color}</p>
+                        <label>Name:</label> {animal.name}
+                        <label>Description:</label> {animal.description}
                       </div>
                     </div>
                   </Link>
