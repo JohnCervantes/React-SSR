@@ -21,10 +21,11 @@ const apolloServer = new ApolloServer({
   context: ({ req }) => {
     const token = req.headers.authorization.replace("Bearer ", "") || "";
 
-    const decodedToken =
-      token !== "" ? jwt.verify(token, process.env.SECRET) : undefined;
-    if (decodedToken && decodedToken.username) {
-      return { user: decodedToken.username };
+    const decodedToken = token
+      ? jwt.verify(token, process.env.SECRET)
+      : undefined;
+    if (decodedToken && decodedToken.email) {
+      return { user: decodedToken.email };
     } else {
       return;
     }

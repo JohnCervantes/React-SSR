@@ -113,3 +113,9 @@ label {
 a {
   @apply hover:text-black hover:underline;
 }
+
+.error{
+  @apply
+  text-yellow-500
+  mr-3
+}

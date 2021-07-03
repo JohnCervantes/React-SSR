@@ -9,7 +9,7 @@ const typeDefs = gql`
 
   type user {
     _id: ID
-    passwordHash: String!
+    password: String!
     email: String!
     firstName: String!
     lastName: String!
@@ -26,8 +26,8 @@ const typeDefs = gql`
   }
   type Mutation {
     addAnimal(name: String, color: String, age: Int): animal
-    createUser(
-      passwordHash: String!
+    addUser(
+      password: String!
       email: String!
       firstName: String!
       lastName: String!

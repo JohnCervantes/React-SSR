@@ -1,8 +1,6 @@
-# https://fullstackopen.com/en
-
 ## Technologies used: 
 
-+ back-end - Next.js, Apollo client 3, Tailwind CSS
++ back-end - Next.js, React, Apollo client 3, Tailwind CSS
 + API - GraphQL, Mongoose
 + Database - MongoDB 
 + CI/CD - Heroku, GitHub Actions

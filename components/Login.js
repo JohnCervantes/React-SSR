@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { readState, USER, VERIFY_TOKEN } from "../operations/query";
+import { useLazyQuery } from "@apollo/client";
+import { USER } from "../operations/query";
 import { RESET_MODAL, ERROR_TOAST, SUCCESS_TOAST } from "../cache";
 import { setState } from "../operations/mutation";
 import { client } from "../pages/_app";
@@ -10,7 +10,17 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [userQuery, { called, loading, data, error }] = useLazyQuery(USER, {
     fetchPolicy: "network-only",
-    onCompleted: () => {
+    onCompleted: (data) => {
+      setState({
+        showToast: {
+          ...SUCCESS_TOAST,
+          header: "Login Sucessful",
+          message: "welcome!",
+        },
+        showModal: RESET_MODAL,
+        user: data.user
+      });
+      window.localStorage.setItem("token", data.user.token);
       client.resetStore();
     },
   });
@@ -35,19 +45,6 @@ export default function Login() {
         },
       });
     }
-    if (data) {
-      setState({
-        user: { ...data.user },
-        showModal: RESET_MODAL,
-        showToast: {
-          SUCCESS_TOAST,
-          header: "Success",
-          message: "logging in successful",
-        },
-      });
-      window.localStorage.setItem("token", data.user.token);
-      client.resetStore();
-    }
   }, [data, error, loading, error]);
 
   return (
@@ -65,7 +62,7 @@ export default function Login() {
       <div className="mb-3 flex-col">
         <label>Password:</label>
         <input
-          type="text"
+          type="password"
           value={password}
           name="password"
           onChange={(e) => setPassword(e.target.value)}

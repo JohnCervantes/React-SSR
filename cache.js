@@ -35,13 +35,5 @@ export const state = makeVar({
   showModal: RESET_MODAL,
   showSpinner: false,
   showToast: RESET_TOAST,
-  user: {
-    passwordHash: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
-    isAdmin: "",
-    registerDate: "",
-  },
+  user: null,
 });

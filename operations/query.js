@@ -11,14 +11,6 @@ export const ALL_ANIMALS = gql`
   }
 `;
 
-export const VERIFY_TOKEN = gql`
-  query verifyToken($token: String!){
-    verifyToken(token: $token) {
-      message
-    }
-  }
-`;
-
 export const USER = gql`
   query user($email: String!, $password: String!) {
     user(email: $email, password: $password) {

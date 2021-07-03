@@ -1,4 +1,4 @@
-import { ApolloError, AuthenticationError } from "apollo-server-errors";
+import { ApolloError } from "apollo-server-errors";
 import animal from "../models/animal.js";
 import user from "../models/user.js";
 import bcrypt from "bcrypt";
@@ -7,7 +7,6 @@ import jwt from "jsonwebtoken";
 const resolvers = {
   Query: {
     animals: async (parent, args, context) => {
-      if (!context.user) return null;
       try {
         const result = await animal.find({});
         return result;
@@ -29,13 +28,18 @@ const resolvers = {
         const passwordCorrect =
           result === null
             ? false
-            : await bcrypt.compare(password, result.passwordHash);
+            : await bcrypt.compare(password, result.password);
         if (!(result && passwordCorrect)) {
           throw new ApolloError(`Invalid email or password.`);
         } else {
           const userForToken = {
-            username: result.email,
+            email: result.email,
             id: result._id,
+            firstName: result.firstName,
+            lastName: result.lastName,
+            phone: result.phone,
+            isAdmin: result.isAdmin,
+            registerDate: result.registerDate,
           };
 
           const token = jwt.sign(userForToken, process.env.SECRET);
@@ -50,6 +54,7 @@ const resolvers = {
   },
   Mutation: {
     addAnimal: async (parent, { name, age, color }, context) => {
+      if (!context.user) return console.log("user is not logged in");
       try {
         const result = await animal.create({ name, age, color });
         return result;
@@ -57,10 +62,10 @@ const resolvers = {
         throw new ApolloError(error);
       }
     },
-    createUser: async (
+    addUser: async (
       parent,
       {
-        passwordHash,
+        password,
         email,
         firstName,
         lastName,
@@ -72,10 +77,10 @@ const resolvers = {
     ) => {
       try {
         const saltRounds = 10;
-        const passwordHashed = bcrypt.hash(passwordHash, saltRounds);
+        const passwordHashed = await bcrypt.hash(password, saltRounds);
 
         const result = await user.create({
-          passwordHash: passwordHashed,
+          password: passwordHashed,
           email,
           firstName,
           lastName,
@@ -86,6 +91,11 @@ const resolvers = {
         const userForToken = {
           email: result.email,
           id: result._id,
+          firstName: result.firstName,
+          lastName: result.lastName,
+          phone: result.phone,
+          isAdmin: result.isAdmin,
+          registerDate: result.registerDate
         };
         const token = jwt.sign(userForToken, process.env.SECRET, {
           expiresIn: "24h",

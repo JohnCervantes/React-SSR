@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 const user = new mongoose.Schema({
-  passwordHash: { type: String, required: true },
+  password: { type: String, required: true },
   email: { type: String, unique: true, required: true, match: /.+\@.+\..+/ },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -20,7 +20,7 @@ user.set("toJSON", {
     // delete returnedObject.__v
 
     // the passwordHash should not be revealed
-    delete returnedObject.passwordHash;
+    delete returnedObject.password;
   },
 });
 
