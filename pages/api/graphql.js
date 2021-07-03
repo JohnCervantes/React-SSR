@@ -19,10 +19,11 @@ const apolloServer = new ApolloServer({
   playground: true,
   introspection: true,
   context: ({ req }) => {
-    const token = req.headers.authorization || "";
-
-    const decodedToken = token
-      ? jwt.verify(token.replace("Bearer ", ""), process.env.SECRET)
+    const decodedToken = req.headers.authorization
+      ? jwt.verify(
+          req.headers.authorization.replace("Bearer ", ""),
+          process.env.SECRET
+        )
       : undefined;
     if (decodedToken && decodedToken.email) {
       return { user: decodedToken.email };
