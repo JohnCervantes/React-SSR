@@ -25,8 +25,7 @@ const authLink = setContext((_, { headers }) => {
 export const client = new ApolloClient({
   link: authLink.concat(
     createHttpLink({
-      //uri: "https://dry-stream-85503.herokuapp.com/graphql",
-      uri: "http://localhost:3000/api/graphql",
+      uri: process.env.URI || "http://localhost:3000/api/graphql"
     })
   ),
   cache: cache,
