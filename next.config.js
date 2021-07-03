@@ -5,5 +5,6 @@ module.exports = {
   env: {
     SECRET: process.env.SECRET,
     uri: process.env.URI,
+    DB_URI: process.env.DB_URI
   },
 };
