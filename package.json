@@ -13,6 +13,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@plaiceholder/next": "^2.1.0",
     "apollo-server-micro": "^2.25.2",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
@@ -23,8 +24,10 @@
     "mongoose": "^5.13.0",
     "mongoose-unique-validator": "^2.0.3",
     "next": "11.0.1",
+    "plaiceholder": "^2.0.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "sharp": "^0.28.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",

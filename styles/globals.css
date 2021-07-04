@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Limelight&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -19,11 +20,17 @@
 }
 
 .navigation {
-  @apply flex
-    justify-start
-  bg-green-300
+  @apply bg-black
+  flex
+  text-gray-300
     p-5
-    h-1/4;
+    h-1/4
+    border-b-2
+    border-gray-300;
+}
+
+.navigation-links {
+  @apply flex w-full justify-end;
 }
 
 .animal-info-section {
@@ -37,7 +44,10 @@
   rounded-sm
     m-2
     shadow-lg
-    cursor-pointer;
+    cursor-pointer
+    transition
+     duration-100 ease-out
+    hover:scale-105 hover:bg-gray-100;
 }
 
 .animal-info {
@@ -56,8 +66,7 @@
 
 .modal-form {
   @apply w-4/12
-    h-5/6
-    max-w-lg
+    h-[85%]
     overflow-y-auto
     bg-white
     fixed
@@ -111,10 +120,18 @@ a {
 }
 
 button {
-  @apply mr-3
-  hover:underline hover:font-semibold;
+  @apply mr-10
+  hover:text-white;
 }
 
-.menu {
-  @apply text-center text-3xl  m-2;
+.navigation-link {
+  @apply text-gray-300 hover:text-white;
+}
+
+.title {
+  @apply font-architect text-xl font-bold;
+}
+
+.list-text {
+  @apply text-center text-2xl text-black py-3;
 }

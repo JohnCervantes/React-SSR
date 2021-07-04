@@ -50,7 +50,7 @@ export default function Login() {
   return (
     <>
       <p className="form-header">Member Login</p>
-      <div className="mb-3 flex-col">
+      <div className="flex-col">
         <label>Email:</label>
         <input
           type="text"
@@ -58,8 +58,9 @@ export default function Login() {
           name="email"
           onChange={(e) => setEmail(e.target.value)}
         />
+        <div>{"\u00A0"}</div>
       </div>
-      <div className="mb-3 flex-col">
+      <div className="flex-col">
         <label>Password:</label>
         <input
           type="password"
@@ -67,6 +68,7 @@ export default function Login() {
           name="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <div>{"\u00A0"}</div>
       </div>
       <label className="mb-3">
         <a href="#">Create Account</a>

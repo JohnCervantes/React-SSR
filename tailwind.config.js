@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         roboto: ["Roboto"],
+        architect: ["Architects+Daughter"]
       },
       animation: {
         bounce200: "bounce 1s infinite 200ms",

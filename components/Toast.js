@@ -32,7 +32,7 @@ export default function Toast() {
   }
   return (
     <div
-      className={`animate-fade-in-up hover:scale-105 min-w-1/4 transition-all bg-gray-50 border-l-4 ${toast.borderColor} p-4 py-4 shadow-lg flex items-center justify-between mb-6 bottom-3 left-1/2 -translate-x-1/2 fixed transform z-40`}
+      className={`animate-fade-in-up hover:scale-105 min-w-1/4 transition-all bg-gray-50 border-l-4 ${toast.borderColor} p-4 py-4 shadow-lg flex items-center justify-between mb-6 bottom-3 left-1/2 -translate-x-1/2 fixed transform z-50`}
       role="alert"
     >
       <span className="mx-auto mr-5 ml-0">

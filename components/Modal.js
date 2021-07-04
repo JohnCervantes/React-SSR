@@ -6,7 +6,7 @@ import {
   faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
 import { addAnimal, addUser } from "../operations/mutation";
-import { RESET_MODAL } from "../cache";
+import { RESET_MODAL, RESET_ICON } from "../cache";
 import { useQuery } from "@apollo/client";
 import { readState } from "../operations/query";
 import Login from "./Login";
@@ -61,10 +61,7 @@ function Modal() {
 
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: async (
-      { name, description, email, phone },
-      { resetForm }
-    ) => {
+    onSubmit: async ({ name, description, email, phone }, { resetForm }) => {
       await addAnimal(name, description, pic, phone, email);
       resetForm();
     },
@@ -146,6 +143,7 @@ function Modal() {
             height="300px"
             width="300px"
             alt="Picture of the missing pet"
+            placeholder="blur"
           />
         </div>
         <div className="mt-2 flex-col">
@@ -326,7 +324,7 @@ function ModalTemplate(props) {
       <div
         className="modal-container"
         onClick={() => {
-          setState({ showModal: RESET_MODAL });
+          setState({ showModal: RESET_MODAL, icon: RESET_ICON });
         }}
       ></div>
       <form
@@ -341,7 +339,7 @@ function ModalTemplate(props) {
           size="lg"
           icon={faTimes}
           onClick={() => {
-            setState({ showModal: RESET_MODAL });
+            setState({ showModal: RESET_MODAL, icon: RESET_ICON });
           }}
         />
         {props.children}
