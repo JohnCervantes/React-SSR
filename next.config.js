@@ -9,6 +9,6 @@ module.exports = withPlaiceholder({
     DB_URI: process.env.DB_URI,
   },
   images: {
-    domains: ["images.dog.ceo"],
-  },
+    domains: ["images.dog.ceo", "images.blz-contentstack.com"],
+  }
 });

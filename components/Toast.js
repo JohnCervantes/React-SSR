@@ -38,7 +38,7 @@ export default function Toast() {
       <span className="mx-auto mr-5 ml-0">
         <FontAwesomeIcon
           className={toast.imgColor}
-          size="2x"
+          size='2x'
           icon={toast.img}
         />
       </span>

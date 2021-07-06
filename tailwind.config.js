@@ -1,17 +1,21 @@
 module.exports = {
   mode: "jit",
-  purge: ["./components/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  purge: [
+    "./pages/*.{js,ts,jsx,tsx}",
+    "./components/*.{js,ts,jsx,tsx}",
+    "./public/index.html",
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       fontFamily: {
         roboto: ["Roboto"],
-        architect: ["Architects+Daughter"]
+        architect: ["Architects+Daughter"],
       },
       animation: {
         bounce200: "bounce 1s infinite 200ms",
         bounce400: "bounce 1s infinite 400ms",
-        'fade-in-up': 'fade-in-up 0.2s ease-out',
+        "fade-in-up": "fade-in-up 0.2s ease-out",
       },
       minWidth: {
         0: "0",

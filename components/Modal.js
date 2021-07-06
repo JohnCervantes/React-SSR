@@ -143,7 +143,6 @@ function Modal() {
             height="300px"
             width="300px"
             alt="Picture of the missing pet"
-            placeholder="blur"
           />
         </div>
         <div className="mt-2 flex-col">

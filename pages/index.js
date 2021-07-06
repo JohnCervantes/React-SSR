@@ -1,4 +1,4 @@
-// import Head from "next/head";
+import Head from "next/head";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
@@ -11,6 +11,7 @@ import jwt from "jsonwebtoken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { getPlaiceholder } from "plaiceholder";
+import EmblaCarousel from "../components/Carousel/Carousel.js"
 
 export const getServerSideProps = async () => {
   try {
@@ -38,6 +39,9 @@ export const getServerSideProps = async () => {
 };
 
 function Zoo(props) {
+  <Head>
+    {/* <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script> */}
+  </Head>;
   const { data, errors } = props;
   const {
     data: {
@@ -135,6 +139,7 @@ function Zoo(props) {
           </p>
         ) : (
           <React.Fragment>
+            <EmblaCarousel></EmblaCarousel>
             <p className="list-text">Pet listing:</p>
             <div className="animal-info-section">
               {animals.map((animal) => {
